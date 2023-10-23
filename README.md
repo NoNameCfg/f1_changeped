@@ -6,6 +6,7 @@ https://forum.cfx.re/t/f1-change-ped-system-script-esx-qbcore-free/
 
 - esx or qbcore
 - okokNotify (optional)
+- skinchanger or qb-skinchanger
 
 # HOW TO INSTALL
 
