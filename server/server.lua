@@ -29,10 +29,10 @@ RegisterCommand('changeped', function(source, args, rawCommand)
         TriggerClientEvent('change_ped', targetPlayer, newPedModel)
 
         if Config.notify == "okok" then
-          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Player ' .. GetPlayerName(source) .. ' has changed the ped of ' .. GetPlayerName(targetPlayer) .. ' to ' .. newPedModel, 2000, 'success', true)
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the ped of ' .. GetPlayerName(targetPlayer) .. ' to ' .. newPedModel, 2000, 'success', true)
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the ped of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to ' .. newPedModel}), { ['Content-Type'] = 'application/json' })
         else if Config.notify == "default" then
-          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'Player ' .. GetPlayerName(source) .. ' has changed the ped of ' .. GetPlayerName(targetPlayer) .. ' to ' .. newPedModel)
+          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the ped of ' .. GetPlayerName(targetPlayer) .. ' to ' .. newPedModel)
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the ped of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to ' .. newPedModel}), { ['Content-Type'] = 'application/json' })
         end
       end
@@ -108,3 +108,64 @@ end
   end
   end
 end, true, {help = "Swap another player's ped"})
+
+
+RegisterCommand('resetped', function(source, args, rawCommand)
+  if Config.framework == "old-esx" or Config.framework == "new-esx" then
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer.getGroup() == 'superadmin' or xPlayer.getGroup() == 'admin' or xPlayer.getGroup() == 'mod' then
+      local targetPlayer = tonumber(args[1]) 
+      if targetPlayer then
+        TriggerClientEvent('normal_skin', targetPlayer, normalSkin)
+        if Config.notify == "okok" then
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
+          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+        elseif Config.notify == "default" then
+          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, GetPlayerName(source) .. ' returned to their normal skin.')
+          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+        end
+      else
+        if Config.notify == "okok" then
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid player ID. Usage: /resetped [PlayerID]', 2000, 'error', true)
+        elseif Config.notify == "default" then
+          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid player ID. Usage: /resetped [PlayerID]')
+        end
+      end
+    else
+      if Config.notify == "okok" then
+        TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'You do not have permission to use this command.', 2000, 'error', true)
+      elseif Config.notify == "default" then
+        TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'You do not have permission to use this command.')
+      end
+  end
+else if Config.framework == "old-qb" or Config.framework == "new-qb" then
+  local xPlayer = QBCore.Functions.GetPlayer(source)
+
+  if xPlayer.Functions.GetPermission() == 'god' or xPlayer.Functions.GetPermission() == 'admin' or xPlayer.Functions.GetPermission() == 'mod' then
+    local targetPlayer = tonumber(args[1]) 
+    if targetPlayer then
+        TriggerClientEvent('normal_skin', targetPlayer, normalSkin)
+        if Config.notify == "okok" then
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
+          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+        elseif Config.notify == "default" then
+          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, GetPlayerName(source) .. ' returned to their normal skin.')
+          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+        end
+      else
+        if Config.notify == "okok" then
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid player ID. Usage: /resetped [PlayerID]', 2000, 'error', true)
+        elseif Config.notify == "default" then
+          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid player ID. Usage: /resetped [PlayerID]')
+        end
+      end
+    else
+      if Config.notify == "okok" then
+        TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'You do not have permission to use this command.', 2000, 'error', true)
+      elseif Config.notify == "default" then
+        TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'You do not have permission to use this command.')
+      end
+    end
+  end
+end
+end, true, {help = 'Return to your normal skin'})
