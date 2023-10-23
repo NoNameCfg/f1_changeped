@@ -1,4 +1,4 @@
-  if Config.framework == "old-esx" then
+if Config.framework == "old-esx" then
   ESX = nil
   TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
   else if Config.framework == "new-esx" then
@@ -116,56 +116,64 @@ RegisterCommand('resetped', function(source, args, rawCommand)
     if xPlayer.getGroup() == 'superadmin' or xPlayer.getGroup() == 'admin' or xPlayer.getGroup() == 'mod' then
       local targetPlayer = tonumber(args[1]) 
       if targetPlayer then
-        TriggerClientEvent('normal_skin', targetPlayer, normalSkin)
+      local targetXPlayer = ESX.GetPlayerFromId(targetPlayer)
+      if targetXPlayer then
+        TriggerClientEvent('normal_skin', targetPlayer)
         if Config.notify == "okok" then
           TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
+          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         end
       else
         if Config.notify == "okok" then
-          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid player ID. Usage: /resetped [PlayerID]', 2000, 'error', true)
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid Player.', 2000, 'error', true)
         elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid player ID. Usage: /resetped [PlayerID]')
+          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid Player.')
         end
       end
     else
       if Config.notify == "okok" then
-        TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'You do not have permission to use this command.', 2000, 'error', true)
+        TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid player ID. Usage: /resetped [PlayerID]', 2000, 'error', true)
       elseif Config.notify == "default" then
-        TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'You do not have permission to use this command.')
+        TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid player ID. Usage: /resetped [PlayerID]')
       end
-  end
-else if Config.framework == "old-qb" or Config.framework == "new-qb" then
-  local xPlayer = QBCore.Functions.GetPlayer(source)
+    end
+  else
+    if Config.framework == "old-qb" or Config.framework == "new-qb" then
+      local xPlayer = QBCore.Functions.GetPlayer(source)
 
-  if xPlayer.Functions.GetPermission() == 'god' or xPlayer.Functions.GetPermission() == 'admin' or xPlayer.Functions.GetPermission() == 'mod' then
-    local targetPlayer = tonumber(args[1]) 
-    if targetPlayer then
-        TriggerClientEvent('normal_skin', targetPlayer, normalSkin)
-        if Config.notify == "okok" then
-          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
-          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
-        elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
-          PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+      if xPlayer.Functions.GetPermission() == 'god' or xPlayer.Functions.GetPermission() == 'admin' or xPlayer.Functions.GetPermission() == 'mod' then
+        local targetPlayer = tonumber(args[1]) 
+        if targetPlayer then
+          local targetXPlayer = QBCore.Functions.GetPlayer(targetPlayer)
+  
+          if targetXPlayer then
+          TriggerClientEvent('normal_skin', targetPlayer)
+          if Config.notify == "okok" then
+            TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
+            PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+          elseif Config.notify == "default" then
+            TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
+            PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
+          end
+        else
+          if Config.notify == "okok" then
+            TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid Player.', 2000, 'error', true)
+          elseif Config.notify == "default" then
+            TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid Player.')
+          end
         end
       else
         if Config.notify == "okok" then
-          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'Invalid player ID. Usage: /resetped [PlayerID]', 2000, 'error', true)
+          TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'You do not have permission to use this command.', 2000, 'error', true)
         elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'Invalid player ID. Usage: /resetped [PlayerID]')
+          TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'You do not have permission to use this command.')
         end
-      end
-    else
-      if Config.notify == "okok" then
-        TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'You do not have permission to use this command.', 2000, 'error', true)
-      elseif Config.notify == "default" then
-        TriggerClientEvent('chatMessage', source, 'PED CHANGE', {255, 0, 0}, 'You do not have permission to use this command.')
       end
     end
   end
+end
 end
 end, true, {help = 'Return to your normal skin'})
