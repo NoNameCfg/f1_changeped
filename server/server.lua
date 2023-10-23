@@ -121,7 +121,7 @@ RegisterCommand('resetped', function(source, args, rawCommand)
           TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, GetPlayerName(source) .. ' returned to their normal skin.')
+          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         end
       else
@@ -149,7 +149,7 @@ else if Config.framework == "old-qb" or Config.framework == "new-qb" then
           TriggerClientEvent('okokNotify:Alert', source, 'PED CHANGE', 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin', 2000, 'success', true)
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         elseif Config.notify == "default" then
-          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, GetPlayerName(source) .. ' returned to their normal skin.')
+          TriggerClientEvent('chatMessage', -1, 'PED CHANGE', {255, 0, 0}, 'STAFF ' .. GetPlayerName(source) .. ' has changed the skin of ' .. GetPlayerName(targetPlayer) .. ' to the default skin' )
           PerformHttpRequest(Config.webhook, function(err, text, headers) end, 'POST', json.encode({content = '**__PED CHANGE LOGS__**\n\n**STAFF**: __' .. GetPlayerName(source) .. '__ has changed the skin of \n\n**PLAYER**: __' .. GetPlayerName(targetPlayer) .. '__ to the default skin'}), { ['Content-Type'] = 'application/json' })
         end
       else
