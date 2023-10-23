@@ -1,5 +1,7 @@
 # f1_changeped
 
+https://forum.cfx.re/t/f1-change-ped-system-script-esx-qbcore-free/
+
 # REQUIREMENTS
 
 - esx or qbcore
