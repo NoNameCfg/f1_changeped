@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'F1YT2019 | NoNameCfg#0001'
 description 'F1_changeped[ESX/QBCORE]'
-version '1.0'
+version '1.1'
 
 shared_script '@es_extended/imports.lua'
 
