@@ -4,10 +4,10 @@ if Config.framework == "old-esx" then
   else if Config.framework == "new-esx" then
     ESX = exports["es_extended"]:getSharedObject()
   else if Config.framework == "old-qb" then
-    local QBCore = nil
+    QBCore = nil
     TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
   else if Config.framework == "new-qb" then
-    local QBCore = exports["qb-core"]:GetCoreObject()
+    QBCore = exports["qb-core"]:GetCoreObject()
     end
    end
   end
